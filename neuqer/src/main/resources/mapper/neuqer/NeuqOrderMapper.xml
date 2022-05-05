@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.neuqer.mapper.NeuqOrderMapper">
+
+    <resultMap type="com.ruoyi.neuqer.domain.NeuqOrder" id="NeuqOrderResult">
+        <result property="id" column="id"/>
+        <!--        <result property="memberId" column="member_id"/>-->
+        <result property="orderSn" column="order_sn"/>
+        <result property="orderStatus" column="order_status"/>
+        <result property="paymentTime" column="payment_time"/>
+        <result property="accomplishTime" column="accomplish_time"/>
+        <result property="orderAmount" column="order_amount"/>
+        <result property="orderType" column="order_type"/>
+        <result property="shippingMethod" column="shipping_method"/>
+        <result property="receiverName" column="receiver_name"/>
+        <result property="receiverPhone" column="receiver_phone"/>
+        <result property="receiverDetailAddress" column="receiver_detail_address"/>
+        <result property="buyerMessage" column="buyerMessage"/>
+        <result property="shippingPrice" column="shipping_price"/>
+        <result property="shippingManId" column="shipping_man_id"/>
+        <result property="pickUpAddress" column="pick_up_address"/>
+        <result property="note" column="note"/>
+        <result property="delFlag" column="del_flag"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+    <delete id="deleteEmptyOrder" parameterType="java.util.List">
+        delete from neuq_order  where neuq_order.order_sn in
+        <foreach item="item" collection="list" open="(" separator="," close=")">
+            #{item,jdbcType=VARCHAR}
+        </foreach>
+    </delete>
+
+    <select id="selectOrderByOrderSn" resultType="com.ruoyi.neuqer.domain.bo.NeuqOrderBo">
+        select n.id,
+               n.order_sn,
+               n.order_status,
+               n.payment_time,
+               n.accomplish_time,
+               n.order_amount,
+               n.order_type,
+               n.shipping_method,
+               n.receiver_name,
+               n.receiver_phone,
+               n.receiver_detail_address,
+               n.buyer_message,
+               n.shipping_price,
+               n.shipping_man_id,
+               n.pick_up_address,
+               n.note
+        from neuq_order n
+        where n.del_flag = '0'
+          and n.order_sn = #{orderSN}
+    </select>
+    <select id="getEmptyOrderList" resultType="java.lang.String">
+        SELECT neuq_order.order_sn
+        FROM neuq_order
+                 LEFT JOIN neuq_order_item
+                           ON neuq_order.order_sn = neuq_order_item.order_sn
+        WHERE neuq_order_item.order_sn is NULL
+    </select>
+
+</mapper>

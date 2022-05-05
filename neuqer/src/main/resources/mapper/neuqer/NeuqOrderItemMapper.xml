@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.neuqer.mapper.NeuqOrderItemMapper">
+
+    <resultMap type="com.ruoyi.neuqer.domain.NeuqOrderItem" id="NeuqOrderItemResult">
+        <result property="id" column="id"/>
+        <result property="orderSn" column="order_sn"/>
+        <result property="productName" column="product_name"/>
+        <result property="className" column="class_name"/>
+        <result property="shoppingOptions" column="shopping_options"/>
+        <result property="unitPrice" column="unit_price"/>
+        <result property="amount" column="amount"/>
+        <result property="subtotal" column="subtotal"/>
+        <result property="singleNumber" column="single_number"/>
+        <result property="totalQuantity" column="total_quantity"/>
+        <result property="takeNumber" column="take_number"/>
+        <result property="refundAmount" column="refund_amount"/>
+        <result property="note" column="note"/>
+        <result property="delFlag" column="del_flag"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <select id="selectListByOrderSn" resultType="com.ruoyi.neuqer.domain.vo.NeuqOrderItemVo">
+        select *
+        from neuq_order_item
+        where neuq_order_item.del_flag = 0 and neuq_order_item.order_sn in
+        <foreach collection="list" item="item"  open="(" separator="," close=")">
+            #{item.orderSn}
+        </foreach>
+    </select>
+
+
+</mapper>
