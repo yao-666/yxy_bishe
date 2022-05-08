@@ -1,0 +1,6 @@
+git init
+git add .
+git commit -m "20220508-1"
+git branch -M main
+git remote add origin https://github.com/yao-666/yxy_bishe.git
+git push -u origin main
