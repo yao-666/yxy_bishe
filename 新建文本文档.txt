@@ -1,5 +1,4 @@
 git init
 git add .
-git commit -m "202205010-1"
-git remote add origin git://github.com/yao-666/yxy_bishe.git
+git commit -m "20220511-0950"
 git push  origin main
